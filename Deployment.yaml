@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-deployment
+  namespace: prod
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: web-app
+
+  template:
+    metadata:
+      labels:
+        app: web-app
+        
+    spec:
+      containers:
+      - name: web-app
+        image: kaashivinfotech/k8s:latest
+
+        ports:
+        - containerPort: 8080
+
+        envFrom:
+        - configMapRef:
+            name: web-env-config
+
+        - secretRef:
+            name: db-secret
+            
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config
+
+      volumes:
+      - name: config-volume
+        configMap:
+          name: web-env-config
+
