@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: web-app
-        image: kaashivinfotech/k8s:latest
+        image: kaashivinfotech/k8s:old
 
         ports:
         - containerPort: 8080
